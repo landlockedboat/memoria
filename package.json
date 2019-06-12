@@ -1,0 +1,32 @@
+{
+	"name": "memoria",
+	"version": "0.0.0",
+	"description": "An experimental Telegram MMO",
+	"license": "MIT",
+	"repository": "vikepic/memoria",
+	"author": {
+		"name": "Victor Enrique Alcazar Lopez",
+		"email": "valcazar96@gmail.com",
+		"url": "vikepic.github.io"
+	},
+	"engines": {
+		"node": ">=6"
+	},
+	"scripts": {
+		"test": "xo && ava",
+		"start": "node index.js"
+	},
+	"files": [
+		"index.js"
+	],
+	"keywords": [
+		""
+	],
+	"dependencies": {
+		"node-telegram-bot-api": "^0.30.0"
+	},
+	"devDependencies": {
+		"ava": "^0.25.0",
+		"xo": "^0.21.0"
+	}
+}
