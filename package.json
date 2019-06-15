@@ -14,20 +14,22 @@
 	},
 	"scripts": {
 		"test": "xo && ava",
-		"start": "node index.js"
+		"start": "nodemon src/index.js"
 	},
 	"files": [
-		"index.js"
+		"src"
 	],
 	"keywords": [
 		""
 	],
 	"dependencies": {
 		"dotenv": "^8.0.0",
-		"node-telegram-bot-api": "^0.30.0"
+		"mongodb": "^3.2.7",
+		"telegraf": "^3.30.1"
 	},
 	"devDependencies": {
 		"ava": "^0.25.0",
+		"nodemon": "^1.19.1",
 		"xo": "^0.21.0"
 	}
 }
