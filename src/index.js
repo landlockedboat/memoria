@@ -6,17 +6,26 @@ const Cordillera = require('cordillera');
 
 class World
 {
-	constructor(size)
+	constructor()
 	{
+		const size = parseInt(process.env.WORLDGEN_SIZE);
 		const heightmap = new Cordillera(.7, size, size);
 		this.tiles = heightmap.getLevels(3);
 		this.entities = {};
 		this.players = {};
+		this.age = parseInt(process.env.WORLDGEN_STARTING_AGE);
+		this.seed = process.env.WORLDGEN_SEED;
+		console.log(size, this.age, this.seed)
+	}
+
+	tick() {
+		++this.age;
+		console.log(`World updated. Age: ${this.age}`)
 	}
 }
 
 let db;
-let world = new World(5);
+let world = new World();
 
 (async () => {
 	console.log(process.env.NODE_ENV);
@@ -63,6 +72,7 @@ you'll be known as ${username}`);
 		}
 	});
 
+	setInterval(world.tick.bind(world), parseInt(process.env.WORLD_TICK_PERIOD));
 	bot.launch();
 })();
 
