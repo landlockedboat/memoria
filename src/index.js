@@ -2,13 +2,23 @@
 require('dotenv').config();
 const Telegraf = require('telegraf');
 const Database = require('./database');
+const Cordillera = require('cordillera');
 
-const players = {};
+class World
+{
+	constructor(size)
+	{
+		const heightmap = new Cordillera(.7, size, size);
+		this.tiles = heightmap.getLevels(3);
+		this.entities = {};
+		this.players = {};
+	}
+}
 
 let db;
+let world = new World(5);
 
 (async () => {
-
 	console.log(process.env.NODE_ENV);
 
 	await initDatabase();
@@ -16,7 +26,7 @@ let db;
 
 	bot.start(async ctx => {
 		const {username} = ctx.from;
-		const player = await getPlayer(username);
+		let player = await getPlayer(username);
 
 		if (player) {
 			ctx.replyWithMarkdown(`You are already logged in.`);
@@ -24,6 +34,8 @@ let db;
 			ctx.replyWithMarkdown(`Welcome to **memoria**.
 you'll be known as ${username}`);
 			await db.create('players', {username});
+			player = await db.read('players', {username});
+			world.players[username] = player;
 		}
 	});
 
@@ -33,6 +45,12 @@ you'll be known as ${username}`);
 		}
 		await db.drop();
 		ctx.replyWithMarkdown(`Database dropped.`);
+	});
+
+	bot.command('map', ctx => {
+		const tiles = world.tiles;
+		ctx.replyWithMarkdown(`${JSON.stringify(tiles)}`);
+		console.log(world);
 	});
 
 	bot.on('message', async ctx => {
@@ -54,7 +72,7 @@ async function initDatabase() {
 }
 
 async function getPlayer(username) {
-	let player = players[username];
+	let player = world.players[username];
 	if (!player) {
 		player = await db.read('players', {username});
 	}

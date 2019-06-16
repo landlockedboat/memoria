@@ -23,6 +23,7 @@
 		""
 	],
 	"dependencies": {
+		"cordillera": "^2.0.0",
 		"dotenv": "^8.0.0",
 		"mongodb": "^3.2.7",
 		"telegraf": "^3.30.1"
